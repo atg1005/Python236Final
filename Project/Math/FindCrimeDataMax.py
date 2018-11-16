@@ -23,8 +23,8 @@ def restrictToDomain(possiblePoints):
     return intersectionPoints
 
 if __name__ == '__main__':
-    fCoefficients = FitPolynomialToData.getCoefficients() # calculate new coefficients
-    #fCoefficients = FitPolynomialToData.getLastCoefficients() # load previously calculated coefficients
+    #fCoefficients = FitPolynomialToData.getCoefficients() # calculate new coefficients
+    fCoefficients = FitPolynomialToData.getLastCoefficients() # load previously calculated coefficients
     #fCoefficients = [5/3,7/2,-10,-5] #simple test case
     fPrimeCoefficients = IntersectionUtils.calculateFPrime(fCoefficients)
     # to be used in visualization
