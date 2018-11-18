@@ -7,6 +7,7 @@ from sklearn.mixture import GaussianMixture
 from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 
+
 def readData(pathToData,title1,title2):
     """
     given path to data create a pandas data frame and populate
@@ -21,6 +22,7 @@ def readData(pathToData,title1,title2):
         data.append(temp)
     return data
 
+
 def KMeans_Cluster(np_data, num_clusters=3):
     """
     Perfrom k-means clustering returns cluster labels.
@@ -28,6 +30,7 @@ def KMeans_Cluster(np_data, num_clusters=3):
     kmeans = KMeans(n_clusters=num_clusters)
     kmeans.fit(np_data)
     return kmeans.predict(np_data)
+
 
 def Hierarchical_Cluster(np_data, num_clusters=3):
     """
@@ -45,12 +48,14 @@ def Gaussian_Mixture_Model_Clustering(np_data, num_clusters=3):
     gmm.fit(np_data)
     return gmm.predict(np_data)
 
+
 def DBSCAN_Cluster(np_data,max_dist=0.01,min_neighbors=4):
     """
     Performs DBSCAN clustering returns labels and dbscan object.
     """
     dbscan = DBSCAN(eps=max_dist, min_samples=min_neighbors)
     return dbscan.fit_predict(np_data)
+
 
 def Mean_Shift_Cluster(np_data):
     """
@@ -59,12 +64,14 @@ def Mean_Shift_Cluster(np_data):
     mean_shift = MeanShift()
     return mean_shift.fit_predict(np_data)
 
+
 def Affinity_Propagation_Cluster(np_data):
     """
     Performs affinity propagation clustering and returns labels.
     """
     ap = AffinityPropagation()
     return ap.fit_predict(np_data)
+
 
 def Spectrial_Cluster(np_data,num_clusters=3):
     """
@@ -73,6 +80,7 @@ def Spectrial_Cluster(np_data,num_clusters=3):
     """
     spectrial = SpectralClustering(n_clusters=num_clusters)
     return spectrial.fit_predict(np_data)
+
 
 def Birch_Cluster(np_data,num_clusters=3):
     """
