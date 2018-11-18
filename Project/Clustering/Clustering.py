@@ -8,14 +8,14 @@ from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 
 
-def readData(pathToData,title1,title2):
+def readData(pathToData, title1, title2):
     """
     given path to data create a pandas data frame and populate
     a list of lists which is returned.
     """
     data = []
-    dataFrame = pd.read_excel(open(pathToData,'rb'))
-    for index,row in dataFrame.iterrows():
+    dataFrame = pd.read_excel(open(pathToData, 'rb'))
+    for index, row in dataFrame.iterrows():
         temp = []
         temp.append(row[title1])
         temp.append(row[title2])
@@ -36,7 +36,7 @@ def Hierarchical_Cluster(np_data, num_clusters=3):
     """
     Performs Hierarchical clustering returns only labels.
     """
-    h_cluster =  AgglomerativeClustering(n_clusters=num_clusters, affinity = 'euclidean', linkage = 'ward')
+    h_cluster = AgglomerativeClustering(n_clusters=num_clusters, affinity='euclidean', linkage='ward')
     return h_cluster.fit_predict(np_data)
 
 
@@ -49,7 +49,7 @@ def Gaussian_Mixture_Model_Clustering(np_data, num_clusters=3):
     return gmm.predict(np_data)
 
 
-def DBSCAN_Cluster(np_data,max_dist=0.01,min_neighbors=4):
+def DBSCAN_Cluster(np_data, max_dist=0.01, min_neighbors=4):
     """
     Performs DBSCAN clustering returns labels and dbscan object.
     """
@@ -73,7 +73,7 @@ def Affinity_Propagation_Cluster(np_data):
     return ap.fit_predict(np_data)
 
 
-def Spectrial_Cluster(np_data,num_clusters=3):
+def Spectrial_Cluster(np_data, num_clusters=3):
     """
     Performs Spectrial clustering and returns labels.
     **Gives warning via console may not work as expected.
@@ -82,7 +82,7 @@ def Spectrial_Cluster(np_data,num_clusters=3):
     return spectrial.fit_predict(np_data)
 
 
-def Birch_Cluster(np_data,num_clusters=3):
+def Birch_Cluster(np_data, num_clusters=3):
     """
     Perform birch clustering and return labels
     """
@@ -91,30 +91,30 @@ def Birch_Cluster(np_data,num_clusters=3):
 
 
 if __name__ == '__main__':
-    centers = [[5,5],[-5,5],[5,-5],[-5,5]] # for make_blobs
+    centers = [[5, 5], [-5, 5], [5, -5], [-5, 5]]  # for make_blobs
     num_clusters = 4
     # read in data and convert to an np array
-    #data_points = np.asarray(readData('../Data/randomPoints.xlsx','X','Y'),dtype=np.int32)
-    #data_points = datasets.make_circles()[0]
+    # data_points = np.asarray(readData('../Data/randomPoints.xlsx','X','Y'),dtype=np.int32)
+    # data_points = datasets.make_circles()[0]
     data_points = datasets.make_moons(50)[0]
-    #data_points = datasets.make_blobs(100,centers=centers)[0]
+    # data_points = datasets.make_blobs(100,centers=centers)[0]
 
     # Perform various clustering methods
-    kmeans_labels = KMeans_Cluster(data_points,num_clusters)
-    hierarchical_labels = Hierarchical_Cluster(data_points,num_clusters)
+    kmeans_labels = KMeans_Cluster(data_points, num_clusters)
+    hierarchical_labels = Hierarchical_Cluster(data_points, num_clusters)
     gmm_labels = Gaussian_Mixture_Model_Clustering(data_points, num_clusters)
-    dbscan_labels = DBSCAN_Cluster(data_points,max_dist=0.001)
+    dbscan_labels = DBSCAN_Cluster(data_points, max_dist=0.001)
     mean_shift_labels = Mean_Shift_Cluster(data_points)
     ap_labels = Affinity_Propagation_Cluster(data_points)
     spectrial_labels = Spectrial_Cluster(data_points, num_clusters)
-    birch_labels = Birch_Cluster(data_points,num_clusters)
+    birch_labels = Birch_Cluster(data_points, num_clusters)
 
     # Graph clustering
-    fig  = plt.figure(figsize = (12,7)) # found size by trial and error
-    fig.subplots_adjust(hspace = 0.85)
-    fig.subplots_adjust(wspace = 0.39)
-    fig.subplots_adjust(left = 0.08)
-    fig.subplots_adjust(right = 0.97)
+    fig = plt.figure(figsize=(12, 7))  # found size by trial and error
+    fig.subplots_adjust(hspace=0.85)
+    fig.subplots_adjust(wspace=0.39)
+    fig.subplots_adjust(left=0.08)
+    fig.subplots_adjust(right=0.97)
     fig.suptitle('Clustering')
 
     p1 = fig.add_subplot(241)
@@ -126,20 +126,20 @@ if __name__ == '__main__':
     p7 = fig.add_subplot(247)
     p8 = fig.add_subplot(248)
 
-    p1.scatter(data_points[:,0] , data_points[:,1] , c = kmeans_labels, s=50, cmap='viridis')
+    p1.scatter(data_points[:, 0], data_points[:, 1], c=kmeans_labels, s=50, cmap='viridis')
     p1.set_title('K-Means (' + str(num_clusters) + ')')
     p1.set_xlabel('X')
-    p1.set_ylabel('Y',rotation=0)
+    p1.set_ylabel('Y', rotation=0)
 
-    p2.scatter(data_points[:,0] , data_points[:,1] , c = hierarchical_labels, s=50, cmap='viridis')
+    p2.scatter(data_points[:, 0], data_points[:, 1], c=hierarchical_labels, s=50, cmap='viridis')
     p2.set_title('Hierarchical (' + str(num_clusters) + ')')
     p2.set_xlabel('X')
-    p2.set_ylabel('Y',rotation=0)
+    p2.set_ylabel('Y', rotation=0)
 
-    p3.scatter(data_points[:,0] , data_points[:,1] , c = gmm_labels, s=50, cmap='viridis')
+    p3.scatter(data_points[:, 0], data_points[:, 1], c=gmm_labels, s=50, cmap='viridis')
     p3.set_title('Guassian Mixture Model (' + str(num_clusters) + ')')
     p3.set_xlabel('X')
-    p3.set_ylabel('Y',rotation=0)
+    p3.set_ylabel('Y', rotation=0)
 
     # DBSCAN is not as easy to plot and I could not plot it correctly.
     # below is dbscan visualization from sklearn I did not write this.
@@ -157,32 +157,32 @@ if __name__ == '__main__':
             col = [0, 0, 0, 1]
         class_member_mask = (labels == k)
         xy = data_points[class_member_mask & core_samples_mask]
-        p4.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=tuple(col),markeredgecolor='k', markersize=6)
+        p4.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=tuple(col), markeredgecolor='k', markersize=6)
         xy = data_points[class_member_mask & ~core_samples_mask]
-        p4.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=tuple(col),markeredgecolor='k', markersize=6)
-    #p4.scatter(data_points[:,0] , data_points[:,1] , c = dbscan_labels, s=50, cmap='viridis')
+        p4.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=tuple(col), markeredgecolor='k', markersize=6)
+    # p4.scatter(data_points[:,0] , data_points[:,1] , c = dbscan_labels, s=50, cmap='viridis')
     p4.set_title('DBSCAN')
     p4.set_xlabel('X')
-    p4.set_ylabel('Y',rotation=0)
+    p4.set_ylabel('Y', rotation=0)
 
-    p5.scatter(data_points[:,0] , data_points[:,1] , c = mean_shift_labels, s=50, cmap='viridis')
+    p5.scatter(data_points[:, 0], data_points[:, 1], c=mean_shift_labels, s=50, cmap='viridis')
     p5.set_title('Mean Shift')
     p5.set_xlabel('X')
-    p5.set_ylabel('Y',rotation=0)
+    p5.set_ylabel('Y', rotation=0)
 
-    p6.scatter(data_points[:,0] , data_points[:,1] , c = ap_labels, s=50, cmap='viridis')
+    p6.scatter(data_points[:, 0], data_points[:, 1], c=ap_labels, s=50, cmap='viridis')
     p6.set_title('Affinity Propagation')
     p6.set_xlabel('X')
-    p6.set_ylabel('Y',rotation=0)
+    p6.set_ylabel('Y', rotation=0)
 
-    p7.scatter(data_points[:,0] , data_points[:,1] , c = spectrial_labels, s=50, cmap='viridis')
+    p7.scatter(data_points[:, 0], data_points[:, 1], c=spectrial_labels, s=50, cmap='viridis')
     p7.set_title('Spectrial (' + str(num_clusters) + ')')
     p7.set_xlabel('X')
-    p7.set_ylabel('Y',rotation=0)
+    p7.set_ylabel('Y', rotation=0)
 
-    p8.scatter(data_points[:,0] , data_points[:,1] , c = birch_labels, s=50, cmap='viridis')
+    p8.scatter(data_points[:, 0], data_points[:, 1], c=birch_labels, s=50, cmap='viridis')
     p8.set_title('Birch')
     p8.set_xlabel('X')
-    p8.set_ylabel('Y',rotation=0)
+    p8.set_ylabel('Y', rotation=0)
 
     plt.show()
