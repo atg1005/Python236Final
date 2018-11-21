@@ -6,6 +6,7 @@ from sklearn.cluster import AffinityPropagation, SpectralClustering, Birch
 from sklearn.mixture import GaussianMixture
 from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
+import FindingMax
 import argparse
 """
 Take command flag to show visualization graphs or not
@@ -35,7 +36,7 @@ def KMeans_Cluster(np_data, num_clusters=3):
     """
     kmeans = KMeans(n_clusters=num_clusters)
     kmeans.fit(np_data)
-    return kmeans.predict(np_data)
+    return kmeans.predict(np_data), kmeans.cluster_centers_
 
 
 def Hierarchical_Cluster(np_data, num_clusters=3):
@@ -68,7 +69,7 @@ def Mean_Shift_Cluster(np_data):
     Performs Mean Shift clustering returns labels.
     """
     mean_shift = MeanShift()
-    return mean_shift.fit_predict(np_data)
+    return mean_shift.fit_predict(np_data), mean_shift.cluster_centers_
 
 
 def Affinity_Propagation_Cluster(np_data):
@@ -76,7 +77,7 @@ def Affinity_Propagation_Cluster(np_data):
     Performs affinity propagation clustering and returns labels.
     """
     ap = AffinityPropagation()
-    return ap.fit_predict(np_data)
+    return ap.fit_predict(np_data), ap.cluster_centers_
 
 
 def Spectrial_Cluster(np_data, num_clusters=3):
@@ -106,14 +107,20 @@ if __name__ == '__main__':
     # data_points = datasets.make_blobs(100,centers=centers)[0]
 
     # Perform various clustering methods
-    kmeans_labels = KMeans_Cluster(data_points, num_clusters)
+    kmeans_labels,kmeans_centers = KMeans_Cluster(data_points, num_clusters)
     hierarchical_labels = Hierarchical_Cluster(data_points, num_clusters)
     gmm_labels = Gaussian_Mixture_Model_Clustering(data_points, num_clusters)
     dbscan_labels = DBSCAN_Cluster(data_points, max_dist=0.001)
-    mean_shift_labels = Mean_Shift_Cluster(data_points)
-    ap_labels = Affinity_Propagation_Cluster(data_points)
+    mean_shift_labels, mean_shift_centers = Mean_Shift_Cluster(data_points)
+    ap_labels, ap_centers = Affinity_Propagation_Cluster(data_points)
     spectrial_labels = Spectrial_Cluster(data_points, num_clusters)
     birch_labels = Birch_Cluster(data_points, num_clusters)
+
+    print('Cluster Type','Max Found',sep='\t')
+    print('Affinity Prop\t',FindingMax.find_max_with_centers(ap_labels,ap_centers,data_points))
+    print('Kmeans Max\t',FindingMax.find_max_with_centers(kmeans_labels,kmeans_centers,data_points))
+    print('Mean Shift\t',FindingMax.find_max_with_centers(mean_shift_labels,mean_shift_centers,data_points))
+
 
     #if command flag for visualization is present show graphs
     if args.visualization:
