@@ -34,5 +34,11 @@ def max_center_index(cluster_centers):
         index += 1
     return max_index
 
+def find_max_with_centers(labels,centers,data):
+    """
+    Given clustering labels, centers, and data return the maximum value found.
+    """
+    return max_of_array(get_cluster_data_points(labels,data,max_center_index(centers)))
+
 if __name__ == '__main__':
     print('Module contains functions for finding the maximum.')
