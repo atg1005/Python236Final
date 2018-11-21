@@ -50,7 +50,7 @@ def Gaussian_Mixture_Model_Clustering(np_data, num_clusters=3):
     """
     gmm = GaussianMixture(n_components=num_clusters, init_params='kmeans')
     gmm.fit(np_data)
-    return gmm.predict(np_data)
+    return gmm.predict(np_data), gmm.means_
 
 def DBSCAN_Cluster(np_data, max_dist=0.01, min_neighbors=4):
     """
@@ -100,7 +100,7 @@ if __name__ == '__main__':
     # Perform various clustering methods
     kmeans_labels,kmeans_centers = KMeans_Cluster(data_points, num_clusters)
     hierarchical_labels = Hierarchical_Cluster(data_points, num_clusters)
-    gmm_labels = Gaussian_Mixture_Model_Clustering(data_points, num_clusters)
+    gmm_labels, gmm_centers = Gaussian_Mixture_Model_Clustering(data_points, num_clusters)
     dbscan_labels = DBSCAN_Cluster(data_points, max_dist=0.001)
     mean_shift_labels, mean_shift_centers = Mean_Shift_Cluster(data_points)
     ap_labels, ap_centers = Affinity_Propagation_Cluster(data_points)
@@ -111,6 +111,7 @@ if __name__ == '__main__':
     print('Affinity Prop\t',FindingMax.find_max_with_centers(ap_labels,ap_centers,data_points))
     print('Kmeans Max\t',FindingMax.find_max_with_centers(kmeans_labels,kmeans_centers,data_points))
     print('Mean Shift\t',FindingMax.find_max_with_centers(mean_shift_labels,mean_shift_centers,data_points))
+    print('EM using GMM\t',FindingMax.find_max_with_centers(gmm_labels,gmm_centers,data_points))
 
     #if command line flag for visualization is present show graphs
     if args.visualization:
