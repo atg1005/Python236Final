@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 import FindingMax
 import argparse
 """
-Take command flag to show visualization graphs or not
+Take command line flag to show visualizations or not
 """
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", help ="set `-v` turn on visualization", action = "store_true", dest='visualization',default = False)
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     print('Mean Shift\t',FindingMax.find_max_with_centers(mean_shift_labels,mean_shift_centers,data_points))
 
 
-    #if command flag for visualization is present show graphs
+    #if command line flag for visualization is present show graphs
     if args.visualization:
         # Graph clustering
         # Window style configuration
