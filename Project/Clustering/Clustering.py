@@ -29,7 +29,6 @@ def readData(pathToData, title1, title2):
         data.append(temp)
     return data
 
-
 def KMeans_Cluster(np_data, num_clusters=3):
     """
     Perfrom k-means clustering returns cluster labels.
@@ -38,14 +37,12 @@ def KMeans_Cluster(np_data, num_clusters=3):
     kmeans.fit(np_data)
     return kmeans.predict(np_data), kmeans.cluster_centers_
 
-
 def Hierarchical_Cluster(np_data, num_clusters=3):
     """
     Performs Hierarchical clustering returns only labels.
     """
     h_cluster = AgglomerativeClustering(n_clusters=num_clusters, affinity='euclidean', linkage='ward')
     return h_cluster.fit_predict(np_data)
-
 
 def Gaussian_Mixture_Model_Clustering(np_data, num_clusters=3):
     """
@@ -55,14 +52,12 @@ def Gaussian_Mixture_Model_Clustering(np_data, num_clusters=3):
     gmm.fit(np_data)
     return gmm.predict(np_data)
 
-
 def DBSCAN_Cluster(np_data, max_dist=0.01, min_neighbors=4):
     """
     Performs DBSCAN clustering returns labels and dbscan object.
     """
     dbscan = DBSCAN(eps=max_dist, min_samples=min_neighbors)
     return dbscan.fit_predict(np_data)
-
 
 def Mean_Shift_Cluster(np_data):
     """
@@ -71,14 +66,12 @@ def Mean_Shift_Cluster(np_data):
     mean_shift = MeanShift()
     return mean_shift.fit_predict(np_data), mean_shift.cluster_centers_
 
-
 def Affinity_Propagation_Cluster(np_data):
     """
     Performs affinity propagation clustering and returns labels.
     """
     ap = AffinityPropagation()
     return ap.fit_predict(np_data), ap.cluster_centers_
-
 
 def Spectrial_Cluster(np_data, num_clusters=3):
     """
@@ -88,14 +81,12 @@ def Spectrial_Cluster(np_data, num_clusters=3):
     spectrial = SpectralClustering(n_clusters=num_clusters)
     return spectrial.fit_predict(np_data)
 
-
 def Birch_Cluster(np_data, num_clusters=3):
     """
     Perform birch clustering and return labels
     """
     birch = Birch()
     return birch.fit_predict(np_data)
-
 
 if __name__ == '__main__':
     centers = [[5, 5], [-5, 5], [5, -5], [-5, 5]]  # for make_blobs
@@ -120,7 +111,6 @@ if __name__ == '__main__':
     print('Affinity Prop\t',FindingMax.find_max_with_centers(ap_labels,ap_centers,data_points))
     print('Kmeans Max\t',FindingMax.find_max_with_centers(kmeans_labels,kmeans_centers,data_points))
     print('Mean Shift\t',FindingMax.find_max_with_centers(mean_shift_labels,mean_shift_centers,data_points))
-
 
     #if command line flag for visualization is present show graphs
     if args.visualization:
