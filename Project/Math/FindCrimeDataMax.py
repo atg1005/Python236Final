@@ -39,7 +39,7 @@ if __name__ == '__main__':
         evaluatedValues.append(IntersectionUtils.f(x,fCoefficients))
 
     #print max found
-    print('Hour:', int(round(intersectionPoints[evaluatedValues.index(max(evaluatedValues))]/100)*100),'with',end='')
+    print('Hour:', int(round(intersectionPoints[evaluatedValues.index(max(evaluatedValues))]/100)*100),'with ',end='')
     print(int(round(max(evaluatedValues))), ' crimes.')
 
     VisualizeData.showGraphs()
