@@ -90,7 +90,7 @@ def Birch_Cluster(np_data, num_clusters=3):
 
 if __name__ == '__main__':
     centers = [[5, 5], [-5, 5], [5, -5], [-5, 5]]  # for make_blobs
-    num_clusters = 4
+    num_clusters = 5
     # read in data and convert to an np array
     # data_points = np.asarray(readData('../Data/randomPoints.xlsx','X','Y'),dtype=np.int32)
     # data_points = datasets.make_circles()[0]
