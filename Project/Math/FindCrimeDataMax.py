@@ -25,8 +25,8 @@ def restrictToDomain(possiblePoints):
 
 if __name__ == '__main__':
     start = time.time()
-    fCoefficients = FitPolynomialToData.getCoefficients() # calculate new coefficients
-    #fCoefficients = FitPolynomialToData.getLastCoefficients() # load previously calculated coefficients
+    #fCoefficients = FitPolynomialToData.getCoefficients() # calculate new coefficients
+    fCoefficients = FitPolynomialToData.getLastCoefficients() # load previously calculated coefficients
     fPrimeCoefficients = IntersectionUtils.calculateFPrime(fCoefficients)
     # to be used in visualization
     serilizeObj(fPrimeCoefficients,'FPrimeCoefficients.bin')
