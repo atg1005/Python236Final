@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import time
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN, MeanShift
 from sklearn.cluster import AffinityPropagation, SpectralClustering, Birch
@@ -97,21 +98,48 @@ if __name__ == '__main__':
     data_points = datasets.make_moons(50)[0]
     # data_points = datasets.make_blobs(100,centers=centers)[0]
 
-    # Perform various clustering methods
+    # Perform various clustering methods timing the duration to compute clusters
+    start = time.time()
     kmeans_labels,kmeans_centers = KMeans_Cluster(data_points, num_clusters)
+    kmeans_max = FindingMax.find_max_with_centers(kmeans_labels,kmeans_centers,data_points)
+    kmeans_time = time.time() - start
+
+    start = time.time()
     hierarchical_labels = Hierarchical_Cluster(data_points, num_clusters)
+    hierarchical_time = time.time() - start
+
+    start = time.time()
     gmm_labels, gmm_centers = Gaussian_Mixture_Model_Clustering(data_points, num_clusters)
+    gmm_max = FindingMax.find_max_with_centers(gmm_labels,gmm_centers,data_points)
+    gmm_time = time.time() - start
+
+    start = time.time()
     dbscan_labels = DBSCAN_Cluster(data_points, max_dist=0.001)
+    dbscan_time = time.time() - start
+
+    start = time.time()
     mean_shift_labels, mean_shift_centers = Mean_Shift_Cluster(data_points)
+    mean_shift_max = FindingMax.find_max_with_centers(mean_shift_labels,mean_shift_centers,data_points)
+    mean_shift_time = time.time() - start
+
+    start = time.time()
     ap_labels, ap_centers = Affinity_Propagation_Cluster(data_points)
+    ap_max = FindingMax.find_max_with_centers(ap_labels,ap_centers,data_points)
+    ap_time = time.time() - start
+
+    start = time.time()
     spectrial_labels = Spectrial_Cluster(data_points, num_clusters)
+    spectrial_time = time.time() - start
+
+    start = time.time()
     birch_labels = Birch_Cluster(data_points, num_clusters)
+    birch_time = time.time() - start
 
     print('Cluster Type','Max Found',sep='\t')
-    print('Affinity Prop\t',FindingMax.find_max_with_centers(ap_labels,ap_centers,data_points))
-    print('Kmeans Max\t',FindingMax.find_max_with_centers(kmeans_labels,kmeans_centers,data_points))
-    print('Mean Shift\t',FindingMax.find_max_with_centers(mean_shift_labels,mean_shift_centers,data_points))
-    print('EM using GMM\t',FindingMax.find_max_with_centers(gmm_labels,gmm_centers,data_points))
+    print('Affinity Prop\t',ap_max)
+    print('Kmeans Max\t',kmeans_max)
+    print('Mean Shift\t',mean_shift_max)
+    print('EM using GMM\t',gmm_max)
 
     #if command line flag for visualization is present show graphs
     if args.visualization:
