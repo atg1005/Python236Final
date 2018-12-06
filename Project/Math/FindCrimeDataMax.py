@@ -1,4 +1,5 @@
 import pickle
+import time
 from numpy import isreal
 import FitPolynomialToData
 import VisualizeData
@@ -23,9 +24,9 @@ def restrictToDomain(possiblePoints):
     return intersectionPoints
 
 if __name__ == '__main__':
-    #fCoefficients = FitPolynomialToData.getCoefficients() # calculate new coefficients
-    fCoefficients = FitPolynomialToData.getLastCoefficients() # load previously calculated coefficients
-    #fCoefficients = [5/3,7/2,-10,-5] #simple test case
+    start = time.time()
+    fCoefficients = FitPolynomialToData.getCoefficients() # calculate new coefficients
+    #fCoefficients = FitPolynomialToData.getLastCoefficients() # load previously calculated coefficients
     fPrimeCoefficients = IntersectionUtils.calculateFPrime(fCoefficients)
     # to be used in visualization
     serilizeObj(fPrimeCoefficients,'FPrimeCoefficients.bin')
@@ -33,13 +34,15 @@ if __name__ == '__main__':
     intersectionPoints = IntersectionUtils.findRoots(fPrimeCoefficients)
     intersectionPoints = restrictToDomain(intersectionPoints)
 
+    #evaule all peaks could be all minimums which is a potential issue.
     evaluatedValues = []
-    #evaule all peaks could be all minimums which is an issue.
     for x in intersectionPoints:
         evaluatedValues.append(IntersectionUtils.f(x,fCoefficients))
 
+    end = time.time()
+    ex_time = end - start
     #print max found
     print('Hour:', int(round(intersectionPoints[evaluatedValues.index(max(evaluatedValues))]/100)*100),'with ',end='')
-    print(int(round(max(evaluatedValues))), ' crimes.')
+    print(int(round(max(evaluatedValues))),' crimes. Execution time:', round(ex_time,4))
 
     VisualizeData.showGraphs()
