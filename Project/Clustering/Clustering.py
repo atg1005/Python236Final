@@ -135,11 +135,11 @@ if __name__ == '__main__':
     birch_labels = Birch_Cluster(data_points, num_clusters)
     birch_time = time.time() - start
 
-    print('Cluster Type','Max Found',sep='\t')
-    print('Affinity Prop\t',ap_max)
-    print('Kmeans Max\t',kmeans_max)
-    print('Mean Shift\t',mean_shift_max)
-    print('EM using GMM\t',gmm_max)
+    print('Cluster Type','Max Found','Execution Time',sep='\t')
+    print('Affinity Prop\t',ap_max,'\t\t',round(ap_time,4))
+    print('Kmeans Max\t',kmeans_max,'\t\t',round(kmeans_time,4))
+    print('Mean Shift\t',mean_shift_max,'\t\t',round(mean_shift_time,4))
+    print('EM using GMM\t',gmm_max,'\t\t',round(gmm_time,4))
 
     #if command line flag for visualization is present show graphs
     if args.visualization:
